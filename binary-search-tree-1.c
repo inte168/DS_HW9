@@ -127,20 +127,34 @@ int initializeBST(Node** h) {
 }
 
 
-
+//inorder: 왼쪽-중간-오른쪽
 void inorderTraversal(Node* ptr)
 {
-
+	if(ptr) {
+		inorderTraversal(ptr->left);
+		printf(" [%d] ", ptr->key);
+		inorderTraversal(ptr->right);
+	}
 }
 
+//preorder: 중간-왼쪽-오른쪽
 void preorderTraversal(Node* ptr)
 {
-
+	if(ptr) {
+		printf(" [%d] ", ptr->key);
+		preorderTraversal(ptr->left);
+		preorderTraversal(ptr->right);
+	}
 }
 
+//postorder: 왼쪽-오른쪽-중간
 void postorderTraversal(Node* ptr)
 {
-
+	if(ptr) {
+		postorderTraversal(ptr->left);
+		postorderTraversal(ptr->right);
+		printf(" [%d] ", ptr->key);
+	}
 }
 
 
@@ -225,6 +239,15 @@ Node* searchIterative(Node* head, int key)
 
 }
 
+void freeNode(Node* ptr)
+{
+	if(ptr) {
+		freeNode(ptr->left);
+		freeNode(ptr->right);
+		free(ptr);
+	}
+}
+
 int freeBST(Node* head)
 {
 	//head가 다른 노드에 연결되지 않았을 때(head만 있음)
@@ -235,27 +258,8 @@ int freeBST(Node* head)
 
 	Node* p = head->left;
 
-	//왼쪽의 노드(root)를 받아서 해제 후 head도 해제.
-	//solution은 함수이니 안되면 함수로.
-	Node* pre = NULL;
-	while(1){
-		if(p->left != NULL){
-			pre = p;
-			p = p->left;
-		}
-		else if(p->right !=NULL){
-			pre = p;
-			p=p->right;
-		}
-		else {
-			free(p);
-			p = pre;
-		}
-	}
+	//head 왼쪽의 노드(root)를 받아서 연결된 그래프를 쭉 해제 후 head도 해제.
+	freeNode(p);
 	free(head);
 	return 1;
 }
-
-
-
-
