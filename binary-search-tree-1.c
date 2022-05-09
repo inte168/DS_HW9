@@ -229,14 +229,35 @@ int deleteLeafNode(Node* head, int key)
 	}
 }
 
+//탐색-재귀적 방식
 Node* searchRecursive(Node* ptr, int key)
 {
+	//ptr이 NULL이면 NULL 리턴
+	if(ptr == NULL) return NULL;
 
+	//찾는 키보다 현재 ptr이 작으면 오른쪽으로 탐색, 크면 왼쪽으로 탐색
+	if(ptr->key < key) ptr = searchRecursive(ptr->right, key);
+	else if(ptr->key > key) ptr = searchRecursive(ptr->left, key);
+
+	//일반적으로 여기에 올 때에는 ptr의 key와 key가 동일할 때.
+	//즉 key의 값과 동일한 ptr을 리턴.
+	//같지 않다면 위에서 걸려서 ptr 값이 동일한 ptr 값을 받아온다.
+	return ptr;
 }
 
+//탐색-반복문(비순차적)
 Node* searchIterative(Node* head, int key)
 {
+	Node*ptr = head->left;
 
+	while(ptr != NULL){
+		if(ptr->key == key) return ptr;
+
+		if(ptr->key < key ) ptr = ptr->right;
+		else ptr = ptr->left;
+	}
+
+	return NULL;
 }
 
 void freeNode(Node* ptr)
