@@ -160,6 +160,10 @@ void postorderTraversal(Node* ptr)
 
 int insert(Node* head, int key)
 {
+	if(head == NULL){
+		printf("Error: head is NULL.\n");
+		return 1;
+	}
 	//새 노드 생성
 	Node* newNode = (Node*)malloc(sizeof(Node));
 	newNode->key = key;
@@ -198,7 +202,7 @@ int insert(Node* head, int key)
 
 int deleteLeafNode(Node* head, int key)
 {
-	//
+	//전처리
 	if(head == NULL || head->left == NULL){
 		printf("\n Error: Nothing to Delete.\n");
 		return -1;
@@ -227,6 +231,11 @@ int deleteLeafNode(Node* head, int key)
 		}
 		return 1;
 	}
+	
+	parentNode = ptr;
+
+	if(ptr->key < key) ptr = ptr->right;
+	else ptr = ptr->left;
 }
 
 //탐색-재귀적 방식
