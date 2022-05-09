@@ -228,14 +228,18 @@ int deleteLeafNode(Node* head, int key)
 			}
 			//leaf가 아닌경우.
 			else printf("node [%d] is not a leaf\n", ptr->key);
+			return 1;
 		}
-		return 1;
-	}
-	
-	parentNode = ptr;
+		//이번 ptr이 아닌 경우.
+		//parentNode를 내려준다.
+		parentNode = ptr;
 
-	if(ptr->key < key) ptr = ptr->right;
-	else ptr = ptr->left;
+		//현 ptr값보다 key가 크면 오른쪽, 작으면 왼쪽 노드로.(같은건 불가능)
+		if(ptr->key < key) ptr = ptr->right;
+		else ptr = ptr->left;
+	}
+
+	
 }
 
 //탐색-재귀적 방식
